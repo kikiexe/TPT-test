@@ -1,6 +1,6 @@
 import React from 'react';
 import { Edit2, Trash2, CheckCircle, XCircle } from 'lucide-react';
-import { Product } from '../api';
+import type { Product } from '../api';
 import Button from './Button';
 
 interface ProductTableProps {

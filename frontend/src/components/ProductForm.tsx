@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Product, ProductInput } from '../api';
+import type { Product, ProductInput } from '../api';
 import Input from './Input';
 import Button from './Button';
 
@@ -11,29 +11,16 @@ interface ProductFormProps {
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit, onCancel, isSubmitting }) => {
-  const [formData, setFormData] = useState<ProductInput>({
-    name: '',
-    description: '',
-    price: 0,
-    stock: 0,
-    category: '',
-    isActive: true,
-  });
+  const [formData, setFormData] = useState<ProductInput>(() => ({
+    name: initialData?.name || '',
+    description: initialData?.description || '',
+    price: initialData?.price || 0,
+    stock: initialData?.stock || 0,
+    category: initialData?.category || '',
+    isActive: initialData?.isActive ?? true,
+  }));
 
   const [errors, setErrors] = useState<Partial<Record<keyof ProductInput, string>>>({});
-
-  useEffect(() => {
-    if (initialData) {
-      setFormData({
-        name: initialData.name,
-        description: initialData.description,
-        price: initialData.price,
-        stock: initialData.stock,
-        category: initialData.category,
-        isActive: initialData.isActive,
-      });
-    }
-  }, [initialData]);
 
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof ProductInput, string>> = {};

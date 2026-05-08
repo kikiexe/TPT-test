@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Package, RefreshCw } from 'lucide-react';
-import { Product, ProductInput, fetchProducts, createProduct, updateProduct, deleteProduct } from './api';
+import { fetchProducts, createProduct, updateProduct, deleteProduct } from './api';
+import type { Product, ProductInput } from './api';
 import ProductTable from './components/ProductTable';
 import ProductForm from './components/ProductForm';
 import ConfirmModal from './components/ConfirmModal';
@@ -137,6 +138,7 @@ function App() {
       {isFormOpen && (
         <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-300">
           <ProductForm 
+            key={editingProduct?.id || 'new'}
             initialData={editingProduct}
             onSubmit={editingProduct ? handleUpdateProduct : handleCreateProduct}
             onCancel={closeForm}
